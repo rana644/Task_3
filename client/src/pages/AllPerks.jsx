@@ -23,12 +23,23 @@ export default function AllPerks() {
 
   // ==================== SIDE EFFECTS WITH useEffect HOOK ====================
 
- /*
- TODO: HOOKS TO IMPLEMENT
- * useEffect Hook #1: Initial Data Loading
- * useEffect Hook #2: Auto-search on Input Change
 
-*/
+ //TODO: HOOKS TO IMPLEMENT
+// useEffect Hook #1: Initial Data Loading
+useEffect(() => {
+  loadAllPerks()
+    
+  }, []) // Dependency: re-run when perks array changes
+
+ 
+// useEffect Hook #2: Auto-search on Input Change
+
+useEffect(() => {
+  loadAllPerks()
+}, [searchQuery, merchantFilter])
+
+ // Dependency
+
 
   
   useEffect(() => {
@@ -132,12 +143,15 @@ export default function AllPerks() {
                 <span className="material-symbols-outlined text-sm align-middle">search</span>
                 {' '}Search by Name
               </label>
-              <input
-                type="text"
-                className="input"
-                placeholder="Enter perk name..."
-                
-              />
+              {/* Search Input */}
+<input
+  type="text"
+  className="input"
+  placeholder="Enter perk name..."
+  value={searchQuery} // controlled value
+  onChange={(e) => setSearchQuery(e.target.value)} // update state
+/>
+              
               <p className="text-xs text-zinc-500 mt-1">
                 Auto-searches as you type, or press Enter / click Search
               </p>
@@ -149,18 +163,20 @@ export default function AllPerks() {
                 <span className="material-symbols-outlined text-sm align-middle">store</span>
                 {' '}Filter by Merchant
               </label>
-              <select
-                className="input"
-                
-              >
-                <option value="">All Merchants</option>
-                
-                {uniqueMerchants.map(merchant => (
-                  <option key={merchant} value={merchant}>
-                    {merchant}
-                  </option>
-                ))}
-              </select>
+              {/* Merchant Dropdown */}
+<select
+  className="input"
+  value={merchantFilter} // controlled value
+  onChange={(e) => setMerchantFilter(e.target.value)} // update state
+>
+  <option value="">All Merchants</option>
+  {uniqueMerchants.map(merchant => (
+    <option key={merchant} value={merchant}>
+      {merchant}
+    </option>
+  ))}
+</select>
+
             </div>
           </div>
 
